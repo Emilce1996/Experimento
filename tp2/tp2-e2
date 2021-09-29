@@ -1,0 +1,90 @@
+package Stack;
+ 
+ 
+import java.util.Stack;
+ 
+public class ED_E2 {
+    Stack<Character> stack = new Stack<Character>();
+    
+    public static void main(String[] args) {
+        (new ED_E2()).open();        
+    }
+    
+    public void open(){
+        System.out.println("Ingrese una expresion matematica");
+        String cadena = Helper.getString();
+        if(checkParentheses(cadena)& checkBrackets(cadena) & checkKeys(cadena)){
+            System.out.println("La expresion esta bien parentisada");
+        }else{
+            System.out.println("La expresion no esta bien  parentizada");
+        }
+    }
+    
+    public boolean checkParentheses(String cadena){
+        char c;
+        for (int i = 0; i < cadena.length(); i++) {
+            c=cadena.charAt(i);
+            if(c=='('){
+                getStack().push(c);
+               
+            }else{
+                if(c==')'){
+                    if(!getStack().empty()){
+                        getStack().pop();
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+        return getStack().size()==0;
+    }
+    
+    public boolean checkBrackets(String cadena){
+        char c;
+        for (int i = 0; i < cadena.length(); i++) {
+            c=cadena.charAt(i);
+            if(c=='['){
+                getStack().push(c);
+            }else{
+                if(c==']'){
+                    if(!getStack().empty()){
+                        getStack().pop();
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+        return getStack().size()==0;
+    }
+    
+    public boolean checkKeys(String cadena){
+        char c;
+        for (int i = 0; i < cadena.length(); i++) {
+            c=cadena.charAt(i);
+            if(c=='{'){
+                getStack().push(c);
+            }else{
+                if(c=='}'){
+                    if(!getStack().empty()){
+                        getStack().pop();
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+        return getStack().size()==0;
+    }
+ 
+    public Stack<Character> getStack() {
+        return stack;
+    }
+ 
+    public void setStack(Stack<Character> stack) {
+        this.stack = stack;
+    }
+ 
+        
+}
