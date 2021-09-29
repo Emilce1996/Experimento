@@ -1,0 +1,47 @@
+package Stack;
+ 
+public class ED_E3 {
+    private Stack<Character> wordStack = new Stack<Character>();
+    
+    public static void main(String[] args) {
+        (new ED_E3()).open();
+    }
+    
+    public void open(){
+        String word;
+        System.out.println("Ingrese palabra: ");
+        word= Helper.getString();
+        if(isPalindrome(word)){
+            System.out.println("La palabra ingresada ES PALINDROMO");
+        }else{
+            System.out.println("La palabra ingresada NO ES PALINDROMO");
+        }
+    }
+    
+    public boolean isPalindrome(String word){
+        String palindrome="";
+        for(int i=0;i<word.length();i++){
+            getWordStack().push(word.charAt(i));
+        }
+        while(!getWordStack().empty()){
+            palindrome=palindrome+getWordStack().peek();
+            getWordStack().pop();
+        }
+        if(word.equalsIgnoreCase(palindrome)){
+            return true;
+        }else{
+            return false;
+        }       
+    }
+ 
+    public Stack<Character> getWordStack() {
+        return wordStack;
+    }
+ 
+    public void setWordStack(Stack<Character> wordStack) {
+        this.wordStack = wordStack;
+    }
+    
+    
+    
+}
