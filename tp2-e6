@@ -1,0 +1,118 @@
+package Stack;
+ 
+import java.util.ArrayList;
+ 
+public class ED_E6 {
+            
+    public static void main(String[] args) {    
+        (new ED_E6()).open();
+    }
+ 
+    public void open() {
+        System.out.println("Se analizara el siguiente HTML: ");
+        System.out.println("------------------------------");
+        System.out.println(html);
+        System.out.println("------------------------------");
+        if (validateFinalStartMark()) {
+            System.out.println("html BIEN escrito");
+        }else{
+            System.out.println("html MAL escrito");
+        }
+        System.out.println("Se obtubieron los siguientes Tags: ");
+        ArrayList<String> tags = getTangs();
+        System.out.println(tags);
+        // validateTags
+        String salida;
+        Stack<String> stack = new Stack<String>();
+        for(int i=0;i<tags.size();i++){
+            if(tags.get(i).charAt(1)=='/'){
+                System.out.println(stack.peek()+" - "+tags.get(i));
+                stack.pop();
+            }else{
+                if(!tags.get(i).contains("/")){
+                    stack.push(tags.get(i));
+                }
+            }
+        }
+        if(stack.empty()){
+            System.out.println("Cierre correcto");
+        }else{
+            System.out.println("ERROR Cierre incorrecto");
+        }
+    }
+    
+    public void validateTags(){
+        
+    }
+    
+    public ArrayList<String> getTangs(){
+        ArrayList<String> tagsObtained = new ArrayList<String>();
+        char letter;
+        int beginIndex=0, endIndex=0;        
+        boolean bandBegin=false,bandEnd=false;
+        for(int i=0;i<html.length();i++){
+            letter=html.charAt(i);
+            if(letter=='<'){
+                beginIndex=i;
+                bandBegin=true;
+            }else{
+                if(letter=='>'){
+                    endIndex=i;
+                    bandEnd=true;
+                }                
+            }
+            if(bandBegin && bandEnd){
+                tagsObtained.add(html.substring(beginIndex, endIndex+1));
+                bandBegin=false;
+                bandEnd=false;
+            }
+        }
+        return tagsObtained;
+    }
+ 
+    public boolean validateFinalStartMark() {
+        Stack<Character> stack = new Stack<Character>();
+        char c;         
+        for (int i = 0; i < html.length(); i++) {  
+            c = html.charAt(i);
+            if ((c == '<') && (html.charAt(i + 1) == '/')) {
+                stack.push(c);
+            } else {
+                if (c == '<') {
+                    stack.push(c);
+                }
+            }
+            if (c == '>') {
+                if (!stack.empty()) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.size() == 0;
+    }
+ 
+    // texto en HTML a analizar
+//    private String html
+//            = "<html>\n"
+//            + "<head>\n"
+//            + "<title>Mi pagina de ejemplo</title>\n"
+//            + "</head>\n"
+//            + "<body>\n"
+//            + "Aqui va otro contenido <br/>\n"
+//            + "</body>\n"
+//            + "</html>";
+    
+    private String html
+            ="<html>\n"
+            + "<head>\n"
+            + "<title>Title of tje document</title>\n"
+            + "</head>\n"
+            + "<body>\n"
+            + "<h1>This is a heading</h1>\n"
+            + "<p>This if a <br/> paragraph.</p>\n"
+            + "</body>\n"
+            + "</html>";
+ 
+}
